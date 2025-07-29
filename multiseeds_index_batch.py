@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 # List of indices to process
-indices = ["D21"] 
+indices = ["D21b"] 
 weights = [(0.03, 0.3, 0.5, 0, 0)]
 # weights = [(0.03, 0.3, 0.5, 0, 0)]
 
@@ -18,8 +18,8 @@ except Exception as e:
     print(f"Error reading {config_path}: {e}")
     sys.exit(1)
 
-config["data"] = "all_38_v1.csv"
-config["etf"] = "ETF_38_v1.csv"
+config["data"] = "all_37_v1.csv"
+config["etf"] = "ETF_37_v1.csv"
 config["market_time"] = "marketTime_38_v1.csv"
 config["holding"] = "holding_20250627_w.csv"
 
