@@ -20,7 +20,7 @@ except Exception as e:
 
 config["data"] = "all_37_v1.csv"
 config["etf"] = "ETF_37_v1.csv"
-config["market_time"] = "marketTime_38_v1.csv"
+config["market_time"] = "marketTime_37_v1.csv"
 config["holding"] = "holding_20250627_w.csv"
 
 # Write the updated config back to file
