@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 # List of indices to process
-indices = ["B55"] 
+indices = ["X1"] 
 weights = [(0.03, 0.3, 0.5, 0, 0)]
 # weights = [(0.03, 0.3, 0.5, 0, 0)]
 
