@@ -18,8 +18,8 @@ except Exception as e:
     print(f"Error reading {config_path}: {e}")
     sys.exit(1)
 
-config["data"] = "all_37_v1.csv"
-config["etf"] = "ETF_37_v1.csv"
+config["data"] = "all_41_v1.csv"
+config["etf"] = "ETF_41_v1.csv"
 config["market_time"] = "marketTime_37_v1.csv"
 config["holding"] = "holding_20250627_w.csv"
 
