@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 # List of indices to process
-indices = ["D21b"] 
+indices = ["D21"] 
 weights = [(0.03, 0.3, 0.5, 0, 0)]
 # weights = [(0.03, 0.3, 0.5, 0, 0)]
 
@@ -20,7 +20,7 @@ except Exception as e:
 
 config["data"] = "all_41_v1.csv"
 config["etf"] = "ETF_41_v1.csv"
-config["market_time"] = "marketTime_37_v1.csv"
+config["market_time"] = "marketTime_41_v1.csv"
 config["holding"] = "holding_20250627_w.csv"
 
 # Write the updated config back to file
