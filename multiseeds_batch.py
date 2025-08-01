@@ -44,7 +44,6 @@ except Exception as e:
     print(f"Error updating config.json before seeds.py: {e}")
     sys.exit(1)
 
-'''
 # Step 2: Execute seeds.py to generate seed_output.txt
 try:
     print("Executing seeds.py to generate seed_output.txt...")
@@ -52,7 +51,6 @@ try:
 except Exception as e:
     print(f"Error executing {seeds_script}: {e}")
     sys.exit(1)
-'''
 
 # Step 3: Update config.json AFTER executing seeds.py
 try:
