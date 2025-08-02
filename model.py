@@ -17,8 +17,9 @@ class LSTMModule(nn.Module):
     def __init__(self, input_size = 1, hidden_size = 1, num_layers = 2):
         super(LSTMModule, self).__init__()
         self.rnn = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
-        self.h = torch.zeros(num_layers, 1, hidden_size, requires_grad=True)
-        self.c = torch.zeros(num_layers, 1, hidden_size, requires_grad=True)
+        # Register hidden states as buffers so they move with the module's device
+        self.register_buffer('h', torch.zeros(num_layers, 1, hidden_size))
+        self.register_buffer('c', torch.zeros(num_layers, 1, hidden_size))
     def forward(self, x):
         self.rnn.flatten_parameters()
         out, (h_end, c_end) = self.rnn(x, (self.h, self.c))
@@ -300,7 +301,7 @@ def loss_combined_holding_Lagrange(weights, data, index, holding_weights,
     light_mask = (diff_ratio > 0.2) & (diff_ratio <= 0.5)
     penalty_assets[light_mask] = (diff_ratio[light_mask] - 0.2) ** 2
     
-    # Heavy penalty: amplify (diff_ratio - 0.5)^2 * £\ in (> 0.5)
+    # Heavy penalty: amplify (diff_ratio - 0.5)^2 * Â£\ in (> 0.5)
     heavy_mask = diff_ratio > 0.5
     penalty_assets[heavy_mask] = ((diff_ratio[heavy_mask] - 0.5) ** 2) * 4
 
@@ -308,7 +309,7 @@ def loss_combined_holding_Lagrange(weights, data, index, holding_weights,
     penalty_assets = lambda_diff * penalty_assets
     holding_penalty = penalty_assets.sum(dim=1)
     
-    # Final loss: min_w max_lambda L(w, £f)
+    # Final loss: min_w max_lambda L(w, Â£f)
     final_loss = combined_loss - weight_entropy_dynamic * entropy_loss + holding_penalty
 
     return final_loss

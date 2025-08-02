@@ -22,10 +22,11 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 np.random.seed(config["seed"])
 torch.manual_seed(config["seed"])
-torch.cuda.manual_seed(config["seed"])
+if torch.cuda.is_available():
+    torch.cuda.manual_seed(config["seed"])
 
 
-device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load dataset
 Dataset = pd.read_csv(config["data"]).set_index("date")
@@ -55,10 +56,10 @@ def split_range(Dataset: pd.DataFrame):
     """
 
     data = np.array(Dataset)
-    data = torch.from_numpy(data).float()
+    data = torch.from_numpy(data).float().to(device)
 
     index_ = np.array(index)
-    index_ = torch.from_numpy(index_).float()
+    index_ = torch.from_numpy(index_).float().to(device)
 
     dates = Dataset.index
     assert data.shape[0] == index_.shape[0]

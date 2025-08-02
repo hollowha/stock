@@ -212,7 +212,7 @@ def train_and_test_for_combined_weight(train_data: torch.tensor,
     
     holding_weights = None
     if previous_pf is not None:
-      holding_weights = torch.tensor(previous_pf.weights.values, dtype=torch.float).unsqueeze(0)
+      holding_weights = torch.tensor(previous_pf.weights.values, dtype=torch.float, device=device).unsqueeze(0)
     
     
     for start_trading_weight in start_trading_weight_candidates:  # MODIFIED
@@ -364,7 +364,7 @@ def train_and_test_for_combined_weight_Lagrangian(train_data: torch.tensor,
     holding_weights = None
     expanded_holding_assets = None
     if previous_pf is not None:
-      holding_weights = torch.tensor(previous_pf.weights.values, dtype=torch.float).unsqueeze(0)
+      holding_weights = torch.tensor(previous_pf.weights.values, dtype=torch.float, device=device).unsqueeze(0)
       expanded_holding_assets = holding_weights[:, :len(assets)].expand(config["batch"], -1)  # shape: [batch, num_assets]
     
     
