@@ -22,7 +22,9 @@ torch.manual_seed(config["seed"])
 torch.cuda.manual_seed(config["seed"])
 '''
 
-device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+if device.type == "cuda":
+    torch.cuda.manual_seed(config["seed"])
 
 # Load dataset
 Dataset = pd.read_csv(config["data"]).set_index("date")
@@ -47,13 +49,13 @@ def split_range(Dataset: pd.DataFrame, split_date_from: str, split_date_to: str)
     mask = (Dataset.index >= split_date_from) & (Dataset.index < split_date_to)
     data = Dataset.loc[mask]
     data = np.array(data)
-    data = torch.from_numpy(data).float()
+    data = torch.from_numpy(data).float().to(device)
 
     index_start = len(Dataset.loc[Dataset.index < split_date_from])
     index_end = len(Dataset.loc[Dataset.index < split_date_to])
     index_ = index[index_start:index_end]
     index_ = np.array(index_)
-    index_ = torch.from_numpy(index_).float()
+    index_ = torch.from_numpy(index_).float().to(device)
 
     dates = Dataset.loc[mask].index
     assert data.shape[0] == index_.shape[0]
