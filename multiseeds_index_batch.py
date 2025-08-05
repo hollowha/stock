@@ -56,7 +56,7 @@ for weight in weights:
           continue
   
       # Execute the main script with the current index as a command-line argument
-      command = ["python3", "multiseeds_batch.py", index_value]
+      command = [r"C:/Users/catfi/OneDrive/Desktop/project/AS/portfolio_code/.venv/Scripts/python.exe", "multiseeds_batch.py", index_value]
       print(f"Executing command: {' '.join(command)}")
       try:
           subprocess.run(command, check=True)

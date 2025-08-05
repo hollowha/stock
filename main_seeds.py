@@ -119,7 +119,11 @@ def split_range(Dataset: pd.DataFrame, split_date_from: str, split_date_to: str)
     index_start = len(Dataset.loc[Dataset.index < split_date_from])
     index_end = len(Dataset.loc[Dataset.index <= split_date_to])
     index_ = index[index_start:index_end]
-    index_ = np.array(index_)
+    # Convert CUDA tensor to CPU first, then to numpy, then back to tensor
+    if isinstance(index_, torch.Tensor):
+        index_ = index_.cpu().numpy()
+    else:
+        index_ = np.array(index_)
     index_ = torch.from_numpy(index_).float().to(device)
 
     assert data.shape[0] == index_.shape[0]
@@ -168,7 +172,7 @@ tmp, _, _ = split_range(Dataset, str(start_date).split()[0], str(current_date).s
 print(tmp.shape)
 skipped_days = tmp.shape[0]-1
 
-index_0050_asset = Asset(daily_return=pd.Series(index_0050[skipped_days:], index=pd.to_datetime(Dataset.index[skipped_days:])),
+index_0050_asset = Asset(daily_return=pd.Series(index_0050[skipped_days:].cpu().numpy(), index=pd.to_datetime(Dataset.index[skipped_days:])),
                          name="0050",
                          asset_type=ASSET_TYPE.MARKET_INDEX)
 index_0050_balance = 100000 / index_0050_asset.cumulative_return.iloc[0]

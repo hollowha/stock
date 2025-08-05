@@ -4,7 +4,7 @@ import sys
 
 # Check if the index parameter is provided
 if len(sys.argv) < 2:
-    print("Usage: python3 multiseeds_batch.py <index>")
+    print("Usage: python multiseeds_batch.py <index>")
     sys.exit(1)
 
 # The index parameter from the command line
@@ -47,7 +47,7 @@ except Exception as e:
 # Step 2: Execute seeds.py to generate seed_output.txt
 try:
     print("Executing seeds.py to generate seed_output.txt...")
-    subprocess.run(["python3", seeds_script], check=True)
+    subprocess.run([r"C:/Users/catfi/OneDrive/Desktop/project/AS/portfolio_code/.venv/Scripts/python.exe", seeds_script], check=True)
 except Exception as e:
     print(f"Error executing {seeds_script}: {e}")
     sys.exit(1)
@@ -78,7 +78,7 @@ for testing_interval, start_trading_weight in all_combinations:
         json.dump(config, f, indent=4)
     
     print(f"Executing {main_script} with testing_interval={testing_interval}, start_trading_weight={start_trading_weight}...")
-    subprocess.run(["python3.12", main_script], check=True)
+    subprocess.run([r"C:/Users/catfi/OneDrive/Desktop/project/AS/portfolio_code/.venv/Scripts/python.exe", main_script], check=True)
 
 # Step 5: Archive generated files (all files starting with '2025_' and seed_output.txt)
 tar_command = f"tar -cf results_20230704_37_avg_5_{index_param}.tar 2025_* seed_output.txt"

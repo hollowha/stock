@@ -68,7 +68,7 @@ def train_and_test(train_data: torch.tensor,
     bw = bw.reindex(bw[0].abs().sort_values(ascending=False).index)
     bw.to_csv(f"{config['output'][:-4]}_{test_dates[0]}.csv", header=False)
     
-    pf = Portfolio(daily_returns=pd.DataFrame(test_data, index=pd.to_datetime(test_dates)),
+    pf = Portfolio(daily_returns=pd.DataFrame(test_data.cpu().numpy(), index=pd.to_datetime(test_dates)),
                    weights=combined_weights.tolist(),
                    name=f"train {train_dates[0]} ~ {train_dates[-1]} | test {test_dates[0]} ~ {test_dates[-1]}")
 
@@ -115,7 +115,7 @@ def train_and_predict(train_data: torch.tensor,
     bw = bw.reindex(bw[0].abs().sort_values(ascending=False).index)
     bw.to_csv(f"{config['output'][:-4]}_prediction.csv", header=False)
     
-    pf = Portfolio(daily_returns=pd.DataFrame(train_data, index=pd.to_datetime(train_dates)),
+    pf = Portfolio(daily_returns=pd.DataFrame(train_data.cpu().numpy(), index=pd.to_datetime(train_dates)),
                    weights=combined_weights.tolist(),
                    name=f"Training data")
     
@@ -323,7 +323,7 @@ def train_and_test_for_combined_weight(train_data: torch.tensor,
     bw.to_csv(f"{config['output'][:-4]}_{test_dates[0]}_{best_weight_candidate}_diff={max_asset_diff_percent:.4f}.csv", header=False)  # MODIFIED
     
     # Construct final portfolio with the best weight  # MODIFIED
-    pf = Portfolio(daily_returns=pd.DataFrame(test_data, index=pd.to_datetime(test_dates)),
+    pf = Portfolio(daily_returns=pd.DataFrame(test_data.cpu().numpy(), index=pd.to_datetime(test_dates)),
                    weights=best_combined_weights.tolist(),
                    name=f"train {train_dates[0]} ~ {train_dates[-1]} | test {test_dates[0]} ~ {test_dates[-1]}")
     return pf

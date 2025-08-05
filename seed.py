@@ -54,7 +54,11 @@ def split_range(Dataset: pd.DataFrame, split_date_from: str, split_date_to: str)
     index_start = len(Dataset.loc[Dataset.index < split_date_from])
     index_end = len(Dataset.loc[Dataset.index < split_date_to])
     index_ = index[index_start:index_end]
-    index_ = np.array(index_)
+    # Convert CUDA tensor to CPU first, then to numpy, then back to tensor
+    if isinstance(index_, torch.Tensor):
+        index_ = index_.cpu().numpy()
+    else:
+        index_ = np.array(index_)
     index_ = torch.from_numpy(index_).float().to(device)
 
     dates = Dataset.loc[mask].index
