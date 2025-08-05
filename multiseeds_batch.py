@@ -33,7 +33,7 @@ try:
     with open(config_path, "r") as f:
         config = json.load(f)
     # Update parameters for seeds.py generation
-    config["delay_interval_months"] = 162
+    config["delay_interval_months"] = 159
     config["testing_interval_months"] = 12
     config["seed"] = 30
     config["index"] = index_param  # Set index parameter from command-line
@@ -56,7 +56,7 @@ except Exception as e:
 try:
     with open(config_path, "r") as f:
         config = json.load(f)
-    config["delay_interval_months"] = 177
+    config["delay_interval_months"] = 174
     with open(config_path, "w") as f:
         json.dump(config, f, indent=4)
     print("Updated config.json after seeds.py execution.")
